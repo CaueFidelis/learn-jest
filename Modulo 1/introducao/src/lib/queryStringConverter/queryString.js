@@ -1,7 +1,10 @@
-module.exports.queryString = obj => {
-  const entries = Object.entries(obj).map(item => {
-    return `${item[0]}=${item[1]}`
-  });
+module.exports.queryString = obj =>
+  Object.entries(obj)
+    .map(([key, value]) => {
+      if (typeof value === `object` && !Array.isArray(value)) {
+        throw new Error('Please check your params');
+      }
 
-  return entries.join('&');
-};
+      return `${key}=${value}`;
+    })
+    .join('&');
