@@ -1,10 +1,9 @@
-module.exports.queryString = obj =>
-  Object.entries(obj)
-    .map(([key, value]) => {
-      if (typeof value === `object` && !Array.isArray(value)) {
-        throw new Error('Please check your params');
-      }
+const keyValueToString = ([key, value]) => {
+  if (typeof value === `object` && !Array.isArray(value)) {
+    throw new Error('Please check your params');
+  }
+  return `${key}=${value}`;
+};
 
-      return `${key}=${value}`;
-    })
-    .join('&');
+module.exports.queryString = obj =>
+  Object.entries(obj).map(keyValueToString).join('&');
